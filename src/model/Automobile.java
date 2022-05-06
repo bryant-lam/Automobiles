@@ -1,10 +1,12 @@
 package model;
 
+import java.util.*;
 import jakarta.persistence.*;
 
 @Entity(name = "automobiles")
 public class Automobile {
     //TODO FK trim_id
+    //TODO bidirectional with available packages
 
 
     @Id
@@ -15,4 +17,12 @@ public class Automobile {
     @Column(unique = true, nullable = false)
     private String vin;
     
+    @JoinTable(
+        name = "chosenPackages", 
+        joinColumns = @JoinColumn(name = "available_id"), 
+        inverseJoinColumns = @JoinColumn(name = "auto_id")
+    )
+    @ManyToMany
+    private Set<AvailablePackage> chosenPackage;
+
 }

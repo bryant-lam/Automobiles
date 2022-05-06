@@ -1,5 +1,6 @@
 package model;
 
+import java.util.*;
 import jakarta.persistence.*;
 
 @Entity(name = "packages")
@@ -12,6 +13,14 @@ public class Package {
 
     @Column(length = 50, nullable = false)
     private String name;
+
+    @JoinTable(
+        name = "packageFeatures", 
+        joinColumns = @JoinColumn(name = "package_id"), 
+        inverseJoinColumns = @JoinColumn(name = "feature_id")
+    )
+    @ManyToMany
+    private Set<Feature> packageFeatures;
 
     public Package() {
     }

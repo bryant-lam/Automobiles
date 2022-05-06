@@ -1,9 +1,11 @@
 package model;
 
+import java.util.*;
 import jakarta.persistence.*;
 
 @Entity(name = "trims")
-//TODO add table constraint from relational scheme
+//TODO add table constraint from relational scheme UK
+//TODO add OneToMany with Model.java and Package.java (Bidirectional)
 public class Trim {
     
     @Id
@@ -16,6 +18,14 @@ public class Trim {
 
     @Column(nullable = false)
     private float cost;
+
+    @JoinTable(
+        name = "trimFeatures", 
+        joinColumns = @JoinColumn(name = "trim_id"), 
+        inverseJoinColumns = @JoinColumn(name = "feature_id")
+    )
+    @ManyToMany
+    private Set<Feature> trimFeatures;
 
     public Trim() {
     }

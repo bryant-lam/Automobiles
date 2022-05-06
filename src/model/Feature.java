@@ -1,5 +1,6 @@
 package model;
 
+import java.util.*;
 import jakarta.persistence.*;
 
 @Entity(name = "features")
@@ -12,6 +13,15 @@ public class Feature {
 
     @Column(length = 100, unique = true, nullable = false)
     private String name;
+
+    @ManyToMany //no mappedBy because unidirectional
+    private Set<Model> models;
+
+    @ManyToMany
+    private Set<Trim> trims;
+
+    @ManyToMany
+    private Set<Package> packages;
 
     public Feature() {
     }
