@@ -26,7 +26,7 @@ public class Feature {
     public Feature() {
     }
 
-    public Feature(int featureId, String name) {
+    public Feature(int featureId, String name, Set<Model> models, Set<Trim> trims, Set<Package> packages) {
         this.featureId = featureId;
         this.name = name;
     }
@@ -52,6 +52,29 @@ public class Feature {
         this.name = name;
     }
 
-    
+    public Set<Model> getModels() {
+        return models;
+    }
+
+    public void setModels(Set<Model> models) {
+        this.models = models;
+    }
+
+    public Set<Trim> getTrims() {
+        return trims;
+    }
+
+    public void setTrims(Set<Trim> trims) {
+        this.trims = trims;
+    }
+
+    public Set<Package> getPackages() {
+        return packages;
+    }
+
+    public void setPackages(Set<Package> packages) {
+        this.packages = packages;
+    }
+
 
 }

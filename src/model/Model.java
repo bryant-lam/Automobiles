@@ -14,6 +14,9 @@ public class Model {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int modelId;
 
+    @OneToMany(mappedBy = "model") //One-to-Many with Trim
+    private List<Trim> trims;
+
     @Column(length = 50, nullable = false)
     private String name;
 

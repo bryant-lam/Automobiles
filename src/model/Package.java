@@ -22,6 +22,9 @@ public class Package {
     @ManyToMany
     private Set<Feature> packageFeatures;
 
+    @OneToMany(mappedBy = "packageObj") //junction table
+    private Set<AvailablePackage> availablePackages;
+
     public Package() {
     }
 

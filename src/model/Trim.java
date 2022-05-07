@@ -4,14 +4,19 @@ import java.util.*;
 import jakarta.persistence.*;
 
 @Entity(name = "trims")
-//TODO add table constraint from relational scheme UK
-//TODO add OneToMany with Model.java and Package.java (Bidirectional)
+@Table(uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"name", "model_id"})
+})
 public class Trim {
     
     @Id
     @Column(name = "trim_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int trimId;
+
+    @ManyToOne //bidirectional FK to parent model
+    @JoinColumn(name = "model_id")
+    private Model model;
 
     @Column(length = 100, nullable = false)
     private String name;
@@ -26,6 +31,12 @@ public class Trim {
     )
     @ManyToMany
     private Set<Feature> trimFeatures;
+
+    @OneToMany(mappedBy = "trim") //junction table with Package.java
+    private Set<AvailablePackage> availablePackages;
+
+    @OneToMany(mappedBy = "autoTrim")
+    private Set<Automobile> automobiles;
 
     public Trim() {
     }

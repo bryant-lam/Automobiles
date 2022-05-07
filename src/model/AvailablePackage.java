@@ -73,9 +73,12 @@ public class AvailablePackage {
         this.cost = cost;
     }
 
-    
+    public Set<Automobile> getAutomobiles() {
+        return automobiles;
+    }
 
-    
-    
+    public void setAutomobiles(Set<Automobile> automobiles) {
+        this.automobiles = automobiles;
+    }    
     
 }

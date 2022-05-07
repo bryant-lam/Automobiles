@@ -5,9 +5,6 @@ import jakarta.persistence.*;
 
 @Entity(name = "automobiles")
 public class Automobile {
-    //TODO FK trim_id
-    //TODO bidirectional with available packages
-
 
     @Id
     @Column(name = "auto_id")
@@ -17,6 +14,10 @@ public class Automobile {
     @Column(unique = true, nullable = false)
     private String vin;
     
+    @ManyToOne
+    @JoinColumn(name = "trim_id")
+    private Trim autoTrim;
+
     @JoinTable(
         name = "chosenPackages", 
         joinColumns = @JoinColumn(name = "available_id"), 
@@ -25,4 +26,52 @@ public class Automobile {
     @ManyToMany
     private Set<AvailablePackage> chosenPackage;
 
+    public Automobile() {
+    }
+
+    public Automobile(int autoId, String vin, Trim autoTrim, Set<AvailablePackage> chosenPackage) {
+        this.autoId = autoId;
+        this.vin = vin;
+        this.autoTrim = autoTrim;
+        this.chosenPackage = chosenPackage;
+    }
+
+    @Override
+    public String toString() {
+        return "Automobile [vin=" + vin + "]";
+    }
+
+    public int getAutoId() {
+        return autoId;
+    }
+
+    public void setAutoId(int autoId) {
+        this.autoId = autoId;
+    }
+
+    public String getVin() {
+        return vin;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
+    }
+
+    public Trim getAutoTrim() {
+        return autoTrim;
+    }
+
+    public void setAutoTrim(Trim autoTrim) {
+        this.autoTrim = autoTrim;
+    }
+
+    public Set<AvailablePackage> getChosenPackage() {
+        return chosenPackage;
+    }
+
+    public void setChosenPackage(Set<AvailablePackage> chosenPackage) {
+        this.chosenPackage = chosenPackage;
+    }
+
+    
 }
