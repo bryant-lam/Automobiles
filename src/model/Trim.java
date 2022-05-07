@@ -36,15 +36,16 @@ public class Trim {
     private Set<AvailablePackage> availablePackages;
 
     @OneToMany(mappedBy = "autoTrim")
-    private Set<Automobile> automobiles;
+    private List<Automobile> automobiles;
 
     public Trim() {
     }
 
-    public Trim(int trimId, String name, float cost) {
+    public Trim(int trimId, Model model, String name, float cost) {
         this.trimId = trimId;
         this.name = name;
         this.cost = cost;
+        this.model = model;
     }
 
     @Override

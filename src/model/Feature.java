@@ -14,19 +14,19 @@ public class Feature {
     @Column(length = 100, unique = true, nullable = false)
     private String name;
 
-    @ManyToMany //no mappedBy because unidirectional
+    @ManyToMany//no mappedBy because unidirectional. Also creates new tables in DataGrip
     private Set<Model> models;
 
     @ManyToMany
     private Set<Trim> trims;
 
     @ManyToMany
-    private Set<Package> packages;
+    private Set<PackageC> packages;
 
     public Feature() {
     }
 
-    public Feature(int featureId, String name, Set<Model> models, Set<Trim> trims, Set<Package> packages) {
+    public Feature(int featureId, String name) {
         this.featureId = featureId;
         this.name = name;
     }
@@ -68,11 +68,11 @@ public class Feature {
         this.trims = trims;
     }
 
-    public Set<Package> getPackages() {
+    public Set<PackageC> getPackages() {
         return packages;
     }
 
-    public void setPackages(Set<Package> packages) {
+    public void setPackages(Set<PackageC> packages) {
         this.packages = packages;
     }
 

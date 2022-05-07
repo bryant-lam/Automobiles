@@ -4,7 +4,7 @@ import java.util.*;
 import jakarta.persistence.*;
 
 @Entity(name = "packages")
-public class Package {
+public class PackageC {
     
     @Id
     @Column(name = "package_id")
@@ -25,10 +25,10 @@ public class Package {
     @OneToMany(mappedBy = "packageObj") //junction table
     private Set<AvailablePackage> availablePackages;
 
-    public Package() {
+    public PackageC() {
     }
 
-    public Package(int packageId, String name) {
+    public PackageC(int packageId, String name) {
         this.packageId = packageId;
         this.name = name;
     }

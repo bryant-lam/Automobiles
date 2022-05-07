@@ -20,20 +20,19 @@ public class Automobile {
 
     @JoinTable(
         name = "chosenPackages", 
-        joinColumns = @JoinColumn(name = "available_id"), 
-        inverseJoinColumns = @JoinColumn(name = "auto_id")
+        joinColumns = @JoinColumn(name = "auto_id"), 
+        inverseJoinColumns = @JoinColumn(name = "available_id")
     )
     @ManyToMany
     private Set<AvailablePackage> chosenPackage;
-
+    
     public Automobile() {
     }
 
-    public Automobile(int autoId, String vin, Trim autoTrim, Set<AvailablePackage> chosenPackage) {
+    public Automobile(int autoId, String vin, Trim autoTrim) {
         this.autoId = autoId;
         this.vin = vin;
         this.autoTrim = autoTrim;
-        this.chosenPackage = chosenPackage;
     }
 
     @Override
@@ -72,6 +71,5 @@ public class Automobile {
     public void setChosenPackage(Set<AvailablePackage> chosenPackage) {
         this.chosenPackage = chosenPackage;
     }
-
     
 }

@@ -6,13 +6,11 @@ import jakarta.persistence.*;
 @Entity(name = "availablePackages")
 public class AvailablePackage {
 
-    @Id
     @JoinColumn(name = "package_id")
     @ManyToOne
-    private Package packageObj;
+    private PackageC packageObj;
 
-    @Id
-    @JoinColumn(name = "trim_id") //TODO Bidirectional
+    @JoinColumn(name = "trim_id")
     @ManyToOne
     private Trim trim;
 
@@ -23,13 +21,13 @@ public class AvailablePackage {
 
     private float cost;
 
-    @ManyToMany(mappedBy = "chosenPackages") //Bidirectional
+    @ManyToMany(mappedBy = "chosenPackage") //Bidirectional
     private Set<Automobile> automobiles;
 
     public AvailablePackage() {
     }
 
-    public AvailablePackage(Package packageObj, Trim trim, int availableId, float cost) {
+    public AvailablePackage(PackageC packageObj, Trim trim, int availableId, float cost) {
         this.packageObj = packageObj;
         this.trim = trim;
         this.availableId = availableId;
@@ -49,11 +47,11 @@ public class AvailablePackage {
         this.availableId = availableId;
     }
 
-    public Package getPackageObj() {
+    public PackageC getPackageObj() {
         return packageObj;
     }
 
-    public void setPackageObj(Package packageObj) {
+    public void setPackageObj(PackageC packageObj) {
         this.packageObj = packageObj;
     }
 
@@ -79,6 +77,6 @@ public class AvailablePackage {
 
     public void setAutomobiles(Set<Automobile> automobiles) {
         this.automobiles = automobiles;
-    }    
-    
+    }
+
 }

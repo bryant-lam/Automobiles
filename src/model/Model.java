@@ -68,4 +68,22 @@ public class Model {
     public void setYear(int year) {
         this.year = year;
     }
+
+    public List<Trim> getTrims() {
+        return trims;
+    }
+
+    public void setTrims(List<Trim> trims) {
+        this.trims = trims;
+    }
+
+    public Set<Feature> getModelFeatures() {
+        return modelFeatures;
+    }
+
+    public void setModelFeatures(Set<Feature> modelFeatures) {
+        this.modelFeatures = modelFeatures;
+    }
+
+    
 }
