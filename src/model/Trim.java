@@ -77,5 +77,38 @@ public class Trim {
         this.cost = cost;
     }
 
+    public Model getModel() {
+        return model;
+    }
+
+    public void setModel(Model model) {
+        this.model = model;
+    }
+
+    public Set<Feature> getTrimFeatures() {
+        return trimFeatures;
+    }
+
+    public void setTrimFeatures(Set<Feature> trimFeatures) {
+        this.trimFeatures = trimFeatures;
+    }
+
+    public Set<AvailablePackage> getAvailablePackages() {
+        return availablePackages;
+    }
+
+    public void setAvailablePackages(Set<AvailablePackage> availablePackages) {
+        this.availablePackages = availablePackages;
+    }
+
+    public List<Automobile> getAutomobiles() {
+        return automobiles;
+    }
+
+    public void setAutomobiles(List<Automobile> automobiles) {
+        this.automobiles = automobiles;
+    }
+
+    
     
 }

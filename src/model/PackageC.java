@@ -53,5 +53,22 @@ public class PackageC {
         this.name = name;
     }
 
+    public Set<Feature> getPackageFeatures() {
+        return packageFeatures;
+    }
+
+    public void setPackageFeatures(Set<Feature> packageFeatures) {
+        this.packageFeatures = packageFeatures;
+    }
+
+    public Set<AvailablePackage> getAvailablePackages() {
+        return availablePackages;
+    }
+
+    public void setAvailablePackages(Set<AvailablePackage> availablePackages) {
+        this.availablePackages = availablePackages;
+    }
+
+    
     
 }
