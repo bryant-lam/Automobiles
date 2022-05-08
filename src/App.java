@@ -127,7 +127,7 @@ public class App {
 
 
         //Pacifica Hybrid 2021 Model
-        Model pHybrid2021 = new Model(3, "Pacifica", 2021);
+        Model pHybrid2021 = new Model(3, "Pacifica Hybrid", 2021);
         Set<Feature> pHybrid2021Features = new HashSet<Feature>(Arrays.asList(powerSlidingDoors, hybridEngine));
         pHybrid2021.setModelFeatures(pHybrid2021Features);
 
