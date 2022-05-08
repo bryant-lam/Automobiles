@@ -220,6 +220,7 @@ public class App {
                 Collections.sort(listFeatures, Comparator.comparing(Feature::getName)); //sort by feature name
 
                 System.out.println(output);
+                System.out.println(requestedAutomobile.stickerPrice());
                 for (Feature f : listFeatures) {
                     System.out.println(f);
                 }
