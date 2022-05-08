@@ -6,7 +6,7 @@ import model.*;
 //! integer ID does not matter because of serial values
 
 public class App {
-    private static void insertData(){
+    private static void instantiateModel() {
         EntityManagerFactory factory = Persistence.createEntityManagerFactory("project3Db");
         EntityManager em = factory.createEntityManager();
 
@@ -195,8 +195,137 @@ public class App {
         em.getTransaction().commit();
     }
 
+    private static void displayMenu() {
+        System.out.println("1. Instantiate the model\n2. Automobile Lookup\n3. Feature Search\n4. Exit");
+    }
+
+    // displays automobile year, model, trim, and its features
+    private static void automobileLookup(String s) {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("project3Db");
+        EntityManager em = factory.createEntityManager();
+
+        var a = em.createQuery("SELECT a FROM automobiles a " + 
+        "WHERE a.vin = ?1", Automobile.class);
+        a.setParameter(1, s);
+        try{
+            Automobile requestedAutomobile = a.getSingleResult();
+            if(requestedAutomobile.getVin().equals(s)) {
+                String output = String.format("\n%d %s %s", 
+                            requestedAutomobile.getAutoTrim().getModel().getYear(), //print year
+                            requestedAutomobile.getAutoTrim().getModel().getName(), //print model name
+                            requestedAutomobile.getAutoTrim().getName());           //print trim name
+                Set<Feature> aFeatures = requestedAutomobile.getFeatures();
+
+                List<Feature> listFeatures = new ArrayList<>(aFeatures);    //convert set to list
+                Collections.sort(listFeatures, Comparator.comparing(Feature::getName)); //sort by feature name
+
+                System.out.println(output);
+                for (Feature f : listFeatures) {
+                    System.out.println(f);
+                }
+            }
+            System.out.println();
+        }
+        catch(NoResultException ex) {
+            System.out.println("Error: Automobile with vin '" + s + "' does not exist.");
+        }
+    }
+
+    // find automobile with feature s by querying through trim, package, and model
+    private static void featureSearch(String s) {
+        EntityManagerFactory factory = Persistence.createEntityManagerFactory("project3Db");
+        EntityManager em = factory.createEntityManager();
+        
+        Set<Automobile> totalAutomobiles = new LinkedHashSet<Automobile>(); 
+        
+        // query for trim features and add automobiles to set
+        var autoTrimFeatures = em.createQuery("SELECT a FROM automobiles a " + 
+        "JOIN a.autoTrim t " +
+        "JOIN t.trimFeatures tf " +
+        "WHERE tf.name = ?1", Automobile.class);
+        autoTrimFeatures.setParameter(1, s);
+        try{
+            List<Automobile> requestedAutomobilebyTrimFeatures = autoTrimFeatures.getResultList();
+            totalAutomobiles.addAll(requestedAutomobilebyTrimFeatures);
+        }
+        catch(NoResultException ex) {
+            System.out.println("No trims with feature '" + s + "'.");
+        }
+        
+        // query for package features and add automobiles to set
+        var autoPackageFeatures = em.createQuery("SELECT a FROM automobiles a " + 
+        "LEFT JOIN a.chosenPackage cP " +
+        "LEFT JOIN cP.packageObj p " +
+        "LEFT JOIN p.packageFeatures pf " +
+        "WHERE pf.name = ?1", Automobile.class);
+        autoPackageFeatures.setParameter(1, s);
+        try{
+            List<Automobile> requestedAutomobilebyPackageFeatures = autoPackageFeatures.getResultList();
+            totalAutomobiles.addAll(requestedAutomobilebyPackageFeatures);
+        }
+        catch(NoResultException ex) {
+            System.out.println("No packages with feature '" + s + "'.");
+        }
+
+        // query for model features and add automobiles to set
+        var autoModelFeatures = em.createQuery("SELECT a FROM automobiles a " + 
+        "JOIN a.autoTrim t " +
+        "JOIN t.model m " +
+        "JOIN m.modelFeatures mf " +
+        "WHERE mf.name = ?1", Automobile.class);
+        autoModelFeatures.setParameter(1, s);
+        try{
+            List<Automobile> requestedAutomobilebyModelFeatures = autoModelFeatures.getResultList();
+            totalAutomobiles.addAll(requestedAutomobilebyModelFeatures);
+        }
+        catch(NoResultException ex) {
+            System.out.println("No model with feature '" + s + "'.");
+        }
+
+        // display automobiles with desired feature
+        System.out.println("vin(s):");
+            for(Automobile automobile: totalAutomobiles) {
+                System.out.println(automobile.getVin());
+            }
+        
+    }
+
     public static void main(String[] args) throws Exception {
-        insertData();
+        Scanner input = new Scanner(System.in);
+        boolean isDataIn = false;
+        System.out.println("Input integers to pick options.");
+        displayMenu();
+        int choice = Integer.parseInt(input.nextLine());
+
+        while(choice != 4) {
+            if(choice == 1 && isDataIn == false) {
+                instantiateModel();
+                isDataIn = true;            // prevent data from being inputted again
+            }
+            else if (choice == 1 && isDataIn == true) {
+                System.out.println("The model is already instantiated.");
+            }
+            else if(choice == 2) {
+                System.out.println("Enter vin of an automobile: ");
+                String vin = input.nextLine();
+                automobileLookup(vin);
+            }
+            else if(choice == 3) {
+                System.out.println("Enter a feature name: ");
+                String feature = input.nextLine();
+                featureSearch(feature);
+            }
+            else if(choice == 4) {
+                break;
+            }
+            else {
+                System.out.println("Error: Invalid input.");
+            }
+            displayMenu();
+            choice = Integer.parseInt(input.nextLine());
+        }
+
+        input.close();
     }
 }
 
