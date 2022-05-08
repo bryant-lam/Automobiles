@@ -72,4 +72,41 @@ public class Automobile {
         this.chosenPackage = chosenPackage;
     }
     
+    public Set<Feature> getFeatures() {
+        Set<Feature> totalFeatures = new HashSet<Feature>();
+        Set<Feature> temp = new HashSet<Feature>();
+
+        for(AvailablePackage aP : chosenPackage){           //get all packages from automobile
+            temp = aP.getPackageObj().getPackageFeatures(); 
+            for(Feature f : temp) {             // in each package, add features to new Set
+                totalFeatures.add(f);
+            }
+        }
+        temp.clear();
+
+        temp = autoTrim.getTrimFeatures(); // set of features from trims
+        for(Feature f : temp) {
+            totalFeatures.add(f);
+        }
+        temp.clear();
+
+        temp = autoTrim.getModel().getModelFeatures(); //set of features from model
+        for(Feature f : temp) {
+            totalFeatures.add(f);
+        }
+        temp.clear();
+
+        return totalFeatures;
+    }
+
+    public double stickerPrice() {
+        double total = 0;
+        total += autoTrim.getCost();
+
+        for(AvailablePackage aP : chosenPackage){           //get all packages from automobile
+            total += aP.getCost();                  // in each package, get cost and add to total
+        }
+
+        return total;
+    }
 }

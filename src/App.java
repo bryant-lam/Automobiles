@@ -3,6 +3,7 @@ import java.util.*;
 import jakarta.persistence.*;
 import model.*;
 
+//! integer ID does not matter because of serial values
 
 public class App {
     private static void insertData(){
@@ -180,6 +181,7 @@ public class App {
         Set<AvailablePackage> a4AvailablePackages = new HashSet<AvailablePackage>(Arrays.asList(pHybrid2021TouringAvailablePackage)); //added safety package
         a4.setChosenPackage(a4AvailablePackages);
         
+        //Automobile 5
         Automobile a5 = new Automobile(5, "bbbbb77777", pHybrid2021Limited);
         Set<AvailablePackage> a5AvailablePackages = new HashSet<AvailablePackage>(Arrays.asList(pHybrid2021LimitedAvailablePackage1, pHybrid2021LimitedAvailablePackage2)); //added safety and theater package
         a5.setChosenPackage(a5AvailablePackages);
