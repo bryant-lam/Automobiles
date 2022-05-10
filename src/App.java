@@ -239,48 +239,24 @@ public class App {
         
         Set<Automobile> totalAutomobiles = new LinkedHashSet<Automobile>(); 
         
-        // query for trim features and add automobiles to set
-        var autoTrimFeatures = em.createQuery("SELECT a FROM automobiles a " + 
-        "JOIN a.autoTrim t " +
-        "JOIN t.trimFeatures tf " +
-        "WHERE tf.name = ?1", Automobile.class);
-        autoTrimFeatures.setParameter(1, s);
-        try{
-            List<Automobile> requestedAutomobilebyTrimFeatures = autoTrimFeatures.getResultList();
-            totalAutomobiles.addAll(requestedAutomobilebyTrimFeatures);
-        }
-        catch(NoResultException ex) {
-            System.out.println("No trims with feature '" + s + "'.");
-        }
         
-        // query for package features and add automobiles to set
-        var autoPackageFeatures = em.createQuery("SELECT a FROM automobiles a " + 
+        // query for features and add automobiles to set
+        var autoFeatures = em.createQuery("SELECT a FROM automobiles a " + 
+        "JOIN a.autoTrim t " +
+        "JOIN t.trimFeatures tf " +         // trim features
         "LEFT JOIN a.chosenPackage cP " +
         "LEFT JOIN cP.packageObj p " +
-        "LEFT JOIN p.packageFeatures pf " +
-        "WHERE pf.name = ?1", Automobile.class);
-        autoPackageFeatures.setParameter(1, s);
-        try{
-            List<Automobile> requestedAutomobilebyPackageFeatures = autoPackageFeatures.getResultList();
-            totalAutomobiles.addAll(requestedAutomobilebyPackageFeatures);
-        }
-        catch(NoResultException ex) {
-            System.out.println("No packages with feature '" + s + "'.");
-        }
-
-        // query for model features and add automobiles to set
-        var autoModelFeatures = em.createQuery("SELECT a FROM automobiles a " + 
-        "JOIN a.autoTrim t " +
+        "LEFT JOIN p.packageFeatures pf " + // package features
         "JOIN t.model m " +
-        "JOIN m.modelFeatures mf " +
-        "WHERE mf.name = ?1", Automobile.class);
-        autoModelFeatures.setParameter(1, s);
+        "JOIN m.modelFeatures mf " +        // model features
+        "WHERE tf.name = ?1 OR pf.name = ?1 OR mf.name = ?1", Automobile.class);
+        autoFeatures.setParameter(1, s);
         try{
-            List<Automobile> requestedAutomobilebyModelFeatures = autoModelFeatures.getResultList();
-            totalAutomobiles.addAll(requestedAutomobilebyModelFeatures);
+            List<Automobile> requestedAutomobileFeatures = autoFeatures.getResultList();
+            totalAutomobiles.addAll(requestedAutomobileFeatures);
         }
         catch(NoResultException ex) {
-            System.out.println("No model with feature '" + s + "'.");
+            System.out.println("No automobiles with feature '" + s + "'.");
         }
 
         // display automobiles with desired feature
